@@ -171,7 +171,8 @@ export type CompletionResponse = {
 };
 
 export const createCompletions = async (
-  options: CompletionsOptions
+  options: CompletionsOptions,
+  cancel: { cancelled: boolean }
 ): Promise<CompletionResponse> => {
   CompletionsOptionsZodSchema.parse(options);
 
@@ -220,8 +221,6 @@ export const createCompletions = async (
   const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
 
   const choices: Choice[] = [];
-
-  let cancelled = false;
 
   while (true) {
     const { value, done } = await reader.read();
@@ -281,7 +280,7 @@ export const createCompletions = async (
 
       options.onUpdate?.({
         cancel: () => {
-          cancelled = true;
+          cancel.cancelled = true;
 
           reader.cancel();
         },
@@ -328,7 +327,7 @@ export const createCompletions = async (
     timeoutId = undefined;
   }
 
-  if (cancelled) {
+  if (cancel.cancelled) {
     throw new CancelledCompletionError(choices);
   }
 
