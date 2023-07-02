@@ -19,7 +19,7 @@ type Expectation = {
   schema: JSONSchema;
 };
 
-type MessageOptions =
+export type MessageOptions =
   | Partial<Omit<CompletionsOptions, "messages" | "n" | "functions">> & {
       expect?: Expectation;
     };
@@ -206,12 +206,12 @@ export const createChat = (
       const result = await userFunction.function(functionArgs);
 
       messages.push({
-        content: JSON.stringify(result),
+        content: JSON.stringify(result.value),
         role: "function",
         name: choice.function_call.name,
       });
 
-      choice = await complete(messageOptions);
+      choice = await complete({ ...messageOptions, ...(result.options ?? {}) });
 
       messages.push(omit(choice, "finishReason"));
     }

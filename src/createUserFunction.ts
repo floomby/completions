@@ -1,5 +1,6 @@
 import { z } from "zod";
 import Ajv, { AnySchemaObject } from "ajv";
+import { MessageOptions } from "./createChat";
 
 export const FunctionZodSchema = z.object({
   name: z.string(),
@@ -12,7 +13,10 @@ export type UserFunctionOptions = {
   name: string;
   description?: string;
   parameters: AnySchemaObject;
-  function: (...args: any[]) => any;
+  function: (...args: any[]) => {
+    value: any;
+    options?: Partial<MessageOptions>;
+  };
 };
 
 export type UserFunction = ReturnType<typeof createUserFunction>;

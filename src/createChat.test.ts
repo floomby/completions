@@ -116,10 +116,12 @@ test("cancel response", async () => {
 test("calls user defined function", async () => {
   const getCurrentWeather = mock.fn(() => {
     return {
-      location: "Albuquerque",
-      temperature: "72",
-      unit: "fahrenheit",
-      forecast: ["sunny", "windy"],
+      value: {
+        location: "Albuquerque",
+        temperature: "72",
+        unit: "fahrenheit",
+        forecast: ["sunny", "windy"],
+      },
     };
   });
 
@@ -161,19 +163,23 @@ test("calls user defined function", async () => {
 test("calls user identified function", async () => {
   const getCurrentWeatherV1 = mock.fn(() => {
     return {
-      location: "Albuquerque",
-      temperature: "72",
-      unit: "fahrenheit",
-      forecast: ["sunny", "windy"],
+      value: {
+        location: "Albuquerque",
+        temperature: "72",
+        unit: "fahrenheit",
+        forecast: ["sunny", "windy"],
+      },
     };
   });
 
   const getCurrentWeatherV2 = mock.fn(() => {
     return {
-      location: "Albuquerque",
-      temperature: "72",
-      unit: "fahrenheit",
-      forecast: ["sunny", "windy"],
+      value: {
+        location: "Albuquerque",
+        temperature: "72",
+        unit: "fahrenheit",
+        forecast: ["sunny", "windy"],
+      },
     };
   });
 
@@ -230,10 +236,12 @@ test("calls user identified function", async () => {
 test("overrides function call", async () => {
   const getCurrentWeather = mock.fn(() => {
     return {
-      location: "Albuquerque",
-      temperature: "72",
-      unit: "fahrenheit",
-      forecast: ["sunny", "windy"],
+      value: {
+        location: "Albuquerque",
+        temperature: "72",
+        unit: "fahrenheit",
+        forecast: ["sunny", "windy"],
+      },
     };
   });
 
