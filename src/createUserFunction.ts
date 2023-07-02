@@ -9,14 +9,16 @@ export const FunctionZodSchema = z.object({
   function: z.function(),
 });
 
+export type Awaitable<T> = T | Promise<T>;
+
 export type UserFunctionOptions = {
   name: string;
   description?: string;
   parameters: AnySchemaObject;
-  function: (...args: any[]) => {
+  function: (...args: any[]) => Awaitable<{
     value: any;
     options?: Partial<MessageOptions>;
-  };
+  }>;
 };
 
 export type UserFunction = ReturnType<typeof createUserFunction>;
